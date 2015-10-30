@@ -221,6 +221,11 @@ a {
   flex-basis: 0;
 }
 
+.cart__container {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
 .cart__content {
 
   flex-grow: 1;
