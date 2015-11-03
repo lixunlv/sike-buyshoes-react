@@ -1,8 +1,8 @@
-const React = require("react");
-const QuantityControl = require('./QuantityControl.jsx')
+import React from 'react';
+import QuantityControl from './QuantityControl.jsx';
 
-let CartItem = React.createClass({
-    render: function() {
+export default class CartItem extends React.Component {
+    render() {
         let {name, imagePath, price, quantity} = this.props.item;
 
         return (
@@ -21,13 +21,10 @@ let CartItem = React.createClass({
                     </div>
                     <img className="cart-item__trash" src="img/trash-icon.svg" />
                 </div>
-                {/* cart-item__top-part */}
                 <div className="cart-item__qty">
                     <QuantityControl item={this.props.item}/>
                 </div>
             </div>
         );
     }
-});
-
-module.exports = CartItem;
+}

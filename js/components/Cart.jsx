@@ -1,13 +1,13 @@
-const React = require("react");
-const CartItem = require("./CartItem.jsx");
-const Data = require("../data.js");
-const Ps = require("perfect-scrollbar")
+import React from 'react';
+import Data from '../data.js';
+import Ps from 'perfect-scrollbar';
+import CartItem from "./CartItem.jsx";
 
-let Cart = React.createClass({
+export default class Cart extends React.Component {
     componentDidMount() {
         let $content = React.findDOMNode(this.refs.content);
         Ps.initialize($content);
-    },
+    }
     render() {
         let children = Object.keys(Data.cartItems).map(key => {
             let item = Data.cartItems[key];
@@ -33,6 +33,5 @@ let Cart = React.createClass({
             </div>
         );
     }
-});
+};
 
-module.exports = Cart;

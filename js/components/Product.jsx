@@ -1,9 +1,9 @@
-const React = require("react");
-const Data = require("../data.js")
-const QuantityControl = require("./QuantityControl.jsx")
+import React from "react";
+import Data from "../data.js";
+import QuantityControl from "./QuantityControl.jsx";
 
-let Product = React.createClass({
-    render: function() {
+export default class Product extends React.Component {
+    render() {
         let {id, name, price, imagePath} = this.props.product;
 
         let addIcon =
@@ -43,6 +43,5 @@ let Product = React.createClass({
             </div>
         );
     }
-});
+};
 
-module.exports = Product;

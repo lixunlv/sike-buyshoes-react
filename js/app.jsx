@@ -1,8 +1,8 @@
-const React = require("react");
-const SiteTitle = require("./components/SiteTitle.jsx")
-const Products = require("./components/Products.jsx")
-const Cart = require("./components/Cart.jsx")
-const Checkout = require("./components/Checkout.jsx")
+import React from "react";
+import SiteTitle from "./components/SiteTitle.jsx";
+import Products from "./components/Products.jsx";
+import Cart from './components/Cart.jsx';
+import Checkout from "./components/Checkout.jsx";
 
 window.onload = () => {
     React.render(<SiteTitle/>,document.querySelector(".site__left-sidebar"));

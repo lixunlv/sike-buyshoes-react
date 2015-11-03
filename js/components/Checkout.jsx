@@ -1,8 +1,8 @@
-const React = require("react");
-const Data = require("../data");
+import React from 'react';
+import Data from '../data.js';
 
-let Checkout = React.createClass({
-    render: function() {
+export default class Checkout extends React.Component {
+    render() {
         let total = Object.keys(Data.cartItems).reduce((previousValue, key, index, array) => {
             let item = Data.cartItems[key];
             let p = Data.products[item['id']];
@@ -50,6 +50,4 @@ let Checkout = React.createClass({
             </div>
         );
     }
-});
-
-module.exports = Checkout;
+};

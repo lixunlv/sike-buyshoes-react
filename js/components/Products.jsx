@@ -1,8 +1,8 @@
-const React = require("react");
-const Data = require("../data.js")
-const Product = require("./Product.jsx")
+import React from "react";
+import Data from "../data.js";
+import Product from "./Product.jsx";
 
-let Products = React.createClass({
+export default class Products extends React.Component {
     render() {
 
         let children = Object.keys(Data.products).map(key => {
@@ -18,5 +18,4 @@ let Products = React.createClass({
 
         );
     }
-});
-module.exports = Products;
+};
