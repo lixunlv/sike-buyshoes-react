@@ -1,22 +1,5 @@
 "use strict";
 
-var SiteTitle = React.createClass({
-    displayName: "SiteTitle",
-
-    render: function render() {
-        return React.createElement(
-            "div",
-            { className: "title" },
-            React.createElement(
-                "h2",
-                null,
-                "Buy Me Shoes"
-            ),
-            React.createElement("img", { className: "title__heart", src: "img/heart.svg" })
-        );
-    }
-});
-
 var products = {
 
     "jameson-vulc": {
@@ -83,6 +66,50 @@ var products = {
         gender: "woman"
     }
 };
+
+var cartItems = {
+    "jameson-vulc": {
+        id: "jameson-vulc",
+        quantity: 1
+    },
+
+    "marana-x-hook-ups": {
+        id: "marana-x-hook-ups",
+        quantity: 2
+    },
+
+    "scout-womens-6": {
+        id: "scout-womens-6",
+        quantity: 2
+    },
+
+    "scout-womens-coco-ho-5": {
+        id: "scout-womens-coco-ho-5",
+        quantity: 1
+    },
+
+    "jameson-2-womens-8": {
+        id: "jameson-2-womens-8",
+        quantity: 1
+    }
+};
+
+var SiteTitle = React.createClass({
+    displayName: "SiteTitle",
+
+    render: function render() {
+        return React.createElement(
+            "div",
+            { className: "title" },
+            React.createElement(
+                "h2",
+                null,
+                "Buy Me Shoes"
+            ),
+            React.createElement("img", { className: "title__heart", src: "img/heart.svg" })
+        );
+    }
+});
 
 var Products = React.createClass({
     displayName: "Products",
@@ -162,33 +189,6 @@ var Product = React.createClass({
         );
     }
 });
-
-var cartItems = {
-    "jameson-vulc": {
-        id: "jameson-vulc",
-        quantity: 1
-    },
-
-    "marana-x-hook-ups": {
-        id: "marana-x-hook-ups",
-        quantity: 2
-    },
-
-    "scout-womens-6": {
-        id: "scout-womens-6",
-        quantity: 2
-    },
-
-    "scout-womens-coco-ho-5": {
-        id: "scout-womens-coco-ho-5",
-        quantity: 1
-    },
-
-    "jameson-2-womens-8": {
-        id: "jameson-2-womens-8",
-        quantity: 1
-    }
-};
 
 var Cart = React.createClass({
     displayName: "Cart",
@@ -278,6 +278,36 @@ var CartItem = React.createClass({
     }
 });
 
+var QuantityControll = React.createClass({
+    displayName: "QuantityControll",
+
+    render: function render() {
+        var quantity = this.props.item.quantity;
+
+        var className = this.props.variant ? "adjust-qty adjust-qty--gray" : "adjust-qty";
+
+        return React.createElement(
+            "div",
+            { className: className },
+            React.createElement(
+                "a",
+                { className: "adjust-qty__button" },
+                "-"
+            ),
+            React.createElement(
+                "div",
+                { className: "adjust-qty__number" },
+                quantity
+            ),
+            React.createElement(
+                "a",
+                { className: "adjust-qty__button" },
+                "+"
+            )
+        );
+    }
+});
+
 var Checkout = React.createClass({
     displayName: "Checkout",
 
@@ -300,34 +330,11 @@ var Checkout = React.createClass({
                 React.createElement(
                     "div",
                     { className: "checkout__line__label" },
-                    "Discount"
-                ),
-                React.createElement(
-                    "div",
-                    { className: "checkout__line__amount" },
-                    "-$90"
-                )
-            ),
-            React.createElement(
-                "div",
-                { className: "checkout__line" },
-                React.createElement(
-                    "div",
-                    { className: "checkout__line__label" },
                     "Subtotal"
                 ),
                 React.createElement(
                     "div",
-                    { className: "checkout__line__amount checkout__line__amount--strikeout" },
-                    "$450"
-                )
-            ),
-            React.createElement(
-                "div",
-                { className: "checkout__line" },
-                React.createElement(
-                    "div",
-                    { className: "checkout__line__amount checkout__line__amount--omg-savings" },
+                    { className: "checkout__line__amount" },
                     '$ ' + total
                 )
             ),
@@ -345,37 +352,19 @@ var Checkout = React.createClass({
     }
 });
 
-var QuantityControll = React.createClass({
-    displayName: "QuantityControll",
-
-    render: function render() {
-        var _props$item2 = this.props.item;
-        var name = _props$item2.name;
-        var imagePath = _props$item2.imagePath;
-        var price = _props$item2.price;
-        var quantity = _props$item2.quantity;
-
-        return React.createElement(
-            "div",
-            { className: "adjust-qty" },
-            React.createElement(
-                "a",
-                { className: "adjust-qty__button" },
-                "-"
-            ),
-            React.createElement(
-                "div",
-                { className: "adjust-qty__number" },
-                quantity
-            ),
-            React.createElement(
-                "a",
-                { className: "adjust-qty__button" },
-                "+"
-            )
-        );
-    }
-});
+//<div className="checkout__line">
+//    <div className="checkout__line__label">
+//        Discount
+//    </div>
+//    <div className="checkout__line__amount">
+//        -$90
+//    </div>
+//</div>
+//<div className="checkout__line">
+//    <div className="checkout__line__amount checkout__line__amount--omg-savings">
+//        {'$ ' + total}
+//    </div>
+//</div>
 
 window.onload = function () {
 

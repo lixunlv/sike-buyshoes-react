@@ -1,14 +1,3 @@
-let SiteTitle = React.createClass({
-    render() {
-        return (
-            <div className="title">
-                <h2>Buy Me Shoes</h2>
-                <img className="title__heart" src="img/heart.svg"/>
-            </div>
-        );
-    }
-});
-
 let products = {
 
     "jameson-vulc": {
@@ -76,67 +65,6 @@ let products = {
     },
 };
 
-let Products = React.createClass({
-    render() {
-
-        let children = Object.keys(products).map(key => {
-            return (
-                <Product product={products[key]} key={key}/>
-            )
-        });
-
-        return (
-            <div className="products">
-                {children}
-            </div>
-
-        );
-    }
-});
-
-let Product = React.createClass({
-    render: function() {
-        let {id, name,price,imagePath} = this.props.product;
-
-        let addIcon =
-            <a className="product__add">
-                <img className="product__add__icon" src="img/cart-icon.svg" />
-            </a>
-
-        if (cartItems[id]) {
-            let cartItem = {
-                name: name,
-                imagePath: imagePath,
-                price: price,
-                quantity: cartItems[id]['quantity']
-            }
-            addIcon = <QuantityControll item={cartItem} variant="gray" />
-        }
-
-        return (
-            <div className="product">
-                <div className="product__display">
-                    <div className="product__img-wrapper">
-                        <img className="product__img" src={imagePath} />
-                    </div>
-                    <div className="product__control">
-                        {addIcon}
-                    </div>
-                    <div className="product__price">
-                        {'$ ' + price}
-                    </div>
-                </div>
-                <div className="product__description">
-                    <div className="product__name">
-                        {name}
-                    </div>
-                    <img className="product__heart" src="img/heart.svg" />
-                </div>
-            </div>
-        );
-    }
-});
-
 let cartItems = {
     "jameson-vulc": {
         id: "jameson-vulc",
@@ -163,6 +91,78 @@ let cartItems = {
         quantity: 1,
     },
 };
+
+let SiteTitle = React.createClass({
+    render() {
+        return (
+            <div className="title">
+                <h2>Buy Me Shoes</h2>
+                <img className="title__heart" src="img/heart.svg"/>
+            </div>
+        );
+    }
+});
+
+let Products = React.createClass({
+    render() {
+
+        let children = Object.keys(products).map(key => {
+            return (
+                <Product product={products[key]} key={key}/>
+            )
+        });
+
+        return (
+            <div className="products">
+                {children}
+            </div>
+
+        );
+    }
+});
+
+let Product = React.createClass({
+    render: function() {
+        let {id, name, price, imagePath} = this.props.product;
+
+        let addIcon =
+            <a className="product__add">
+                <img className="product__add__icon" src="img/cart-icon.svg" />
+            </a>;
+
+        if (cartItems[id]) {
+            let cartItem = {
+                name: name,
+                imagePath: imagePath,
+                price: price,
+                quantity: cartItems[id]['quantity']
+            };
+            addIcon = <QuantityControll item={cartItem} variant="gray" />
+        }
+
+        return (
+            <div className="product">
+                <div className="product__display">
+                    <div className="product__img-wrapper">
+                        <img className="product__img" src={imagePath} />
+                    </div>
+                    <div className="product__control">
+                        {addIcon}
+                    </div>
+                    <div className="product__price">
+                        {'$ ' + price}
+                    </div>
+                </div>
+                <div className="product__description">
+                    <div className="product__name">
+                        {name}
+                    </div>
+                    <img className="product__heart" src="img/heart.svg" />
+                </div>
+            </div>
+        );
+    }
+});
 
 let Cart = React.createClass({
     componentDidMount() {
@@ -198,7 +198,7 @@ let Cart = React.createClass({
 
 let CartItem = React.createClass({
     render: function() {
-        let {name,imagePath,price,quantity} = this.props.item;
+        let {name, imagePath, price, quantity} = this.props.item;
 
         return (
             <div className="cart-item">
@@ -225,6 +225,22 @@ let CartItem = React.createClass({
     }
 });
 
+let QuantityControll = React.createClass({
+    render: function() {
+        let {quantity} = this.props.item;
+        let className = this.props.variant ?
+            "adjust-qty adjust-qty--gray" : "adjust-qty";
+
+        return (
+            <div className={className}>
+                <a className="adjust-qty__button">-</a>
+                <div className="adjust-qty__number">{quantity}</div>
+                <a className="adjust-qty__button">+</a>
+            </div>
+        );
+    }
+});
+
 let Checkout = React.createClass({
     render: function() {
         let total = Object.keys(cartItems).reduce((previousValue, key, index, array) => {
@@ -241,22 +257,9 @@ let Checkout = React.createClass({
                 <input type="text" className="checkout__coupon-input" placeholder="coupon code" />
                 <div className="checkout__line">
                     <div className="checkout__line__label">
-                        Discount
-                    </div>
-                    <div className="checkout__line__amount">
-                        -$90
-                    </div>
-                </div>
-                <div className="checkout__line">
-                    <div className="checkout__line__label">
                         Subtotal
                     </div>
-                    <div className="checkout__line__amount checkout__line__amount--strikeout">
-                        $450
-                    </div>
-                </div>
-                <div className="checkout__line">
-                    <div className="checkout__line__amount checkout__line__amount--omg-savings">
+                    <div className="checkout__line__amount">
                         {'$ ' + total}
                     </div>
                 </div>
@@ -271,18 +274,20 @@ let Checkout = React.createClass({
     }
 });
 
-let QuantityControll = React.createClass({
-    render: function() {
-        let {name,imagePath,price,quantity} = this.props.item;
-        return (
-            <div className="adjust-qty">
-                <a className="adjust-qty__button">-</a>
-                <div className="adjust-qty__number">{quantity}</div>
-                <a className="adjust-qty__button">+</a>
-            </div>
-        );
-    }
-});
+//<div className="checkout__line">
+//    <div className="checkout__line__label">
+//        Discount
+//    </div>
+//    <div className="checkout__line__amount">
+//        -$90
+//    </div>
+//</div>
+//<div className="checkout__line">
+//    <div className="checkout__line__amount checkout__line__amount--omg-savings">
+//        {'$ ' + total}
+//    </div>
+//</div>
+
 
 window.onload = () => {
 
