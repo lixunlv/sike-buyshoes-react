@@ -1,6 +1,16 @@
 import React from "react";
+import CartStore from "../stores/CartStore.jsx";
 
 export default class QuantityControl extends React.Component {
+    subOnClick(e) {
+        let {id, quantity} = this.props.item;
+        CartStore.updateCartItemQuantity(id, quantity - 1);
+    }
+
+    addOnClick(e) {
+        let {id, quantity} = this.props.item;
+        CartStore.updateCartItemQuantity(id, quantity + 1);
+    }
     render() {
         let {quantity} = this.props.item;
         let className = this.props.variant ?
@@ -8,9 +18,9 @@ export default class QuantityControl extends React.Component {
 
         return (
             <div className={className}>
-                <a className="adjust-qty__button">-</a>
+                <a className="adjust-qty__button" onClick={this.subOnClick.bind(this)}>-</a>
                 <div className="adjust-qty__number">{quantity}</div>
-                <a className="adjust-qty__button">+</a>
+                <a className="adjust-qty__button" onClick={this.addOnClick.bind(this)}>+</a>
             </div>
         );
     }

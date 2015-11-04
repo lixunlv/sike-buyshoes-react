@@ -1,4 +1,5 @@
-const EventEmitter = require("events");
+import EventEmitter from "events";
+import Data from "../data.js";
 
 let CartStore = (() => {
     let emitter = new EventEmitter();
@@ -20,16 +21,31 @@ let CartStore = (() => {
         },
 
         // Writer methods. These are the "actions".
-        addCartItem(productId) {
+        setCartItems(items) {
+            _cartItems = items;
+            emitChange();
+        },
 
+        updateCartItemQuantity(productId, quantity)
+        {
+            let carItem = _cartItems[productId];
+            if (carItem) {
+                carItem.quantity = quantity;
+                if (carItem.quantity == 0)
+                    delete _cartItems[productId];
+
+                emitChange();
+            }
+        },
+
+        addCartItem(productId) {
+            let carItem = { id: productId, quantity: 1};
+            _cartItems[productId] = carItem;
+            emitChange();
         },
 
         removeCartItem(productId) {
-
-        },
-
-        setCartItems(items) {
-            _cartItems = items;
+            delete _cartItems[productId];
             emitChange();
         },
 

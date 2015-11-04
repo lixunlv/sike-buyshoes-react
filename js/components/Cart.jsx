@@ -2,22 +2,27 @@ import React from 'react';
 import Data from '../data.js';
 import Ps from 'perfect-scrollbar';
 import CartItem from "./CartItem.jsx";
+import CartStore from "../stores/CartStore.jsx";
 
 export default class Cart extends React.Component {
     componentDidMount() {
         let $content = React.findDOMNode(this.refs.content);
         Ps.initialize($content);
+
+        CartStore.addChangeListener(this.forceUpdate.bind(this));
     }
     render() {
-        let children = Object.keys(Data.cartItems).map(key => {
-            let item = Data.cartItems[key];
+        let cartItems = CartStore.getCartItems();
+        let children = Object.keys(cartItems).map(key => {
+            let item = cartItems[key];
             let p = Data.products[item['id']];
             let cartItem = {
+                id : key,
                 name: p['name'],
                 imagePath: p['imagePath'],
                 price: p['price'],
                 quantity: item['quantity']
-            }
+            };
             return (
                 <CartItem item={cartItem} key={item['id']}/>
             )

@@ -1,10 +1,15 @@
 import React from 'react';
 import Data from '../data.js';
+import CartStore from '../stores/CartStore.jsx';
 
 export default class Checkout extends React.Component {
+    componentDidMount() {
+        CartStore.addChangeListener(this.forceUpdate.bind(this));
+    }
     render() {
-        let total = Object.keys(Data.cartItems).reduce((previousValue, key, index, array) => {
-            let item = Data.cartItems[key];
+        let cartItems = CartStore.getCartItems();
+        let total = Object.keys(cartItems).reduce((previousValue, key, index, array) => {
+            let item = cartItems[key];
             let p = Data.products[item['id']];
 
             return previousValue + p['price'] * item['quantity'];
@@ -31,7 +36,7 @@ export default class Checkout extends React.Component {
                         Subtotal
                     </div>
                     <div className="checkout__line__amount">
-                        {'$ ' + total}
+                        {'$ ' + total.toFixed(2)}
                     </div>
                 </div>
                 {
