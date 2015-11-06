@@ -1,21 +1,27 @@
 import React from 'react';
-import Data from '../data.js';
 import Ps from 'perfect-scrollbar';
 import CartItem from "./CartItem.jsx";
 import CartStore from "../stores/CartStore.jsx";
+import ProductStore from "../stores/ProductStore.jsx";
+import connect from "./connect.jsx";
+//import ConnectedStore from "./ConnectedStore.jsx";
+//import MakeConnectedComponent from "./MakeConnectedComponent.jsx";
+//import Data from '../data.js';
 
-export default class Cart extends React.Component {
+
+class Cart extends React.Component {
     componentDidMount() {
         let $content = React.findDOMNode(this.refs.content);
         Ps.initialize($content);
 
-        CartStore.addChangeListener(this.forceUpdate.bind(this));
+        //CartStore.addChangeListener(this.forceUpdate.bind(this));
     }
     render() {
-        let cartItems = CartStore.getCartItems();
+        //let cartItems = CartStore.getCartItems();
+        let {cartItems} = this.props;
         let children = Object.keys(cartItems).map(key => {
             let item = cartItems[key];
-            let p = Data.products[item['id']];
+            let p = this.props.products[item['id']];
             let cartItem = {
                 id : key,
                 name: p['name'],
@@ -40,3 +46,21 @@ export default class Cart extends React.Component {
     }
 };
 
+//export default class ConnectedCart extends React.Component {
+//    render() {
+//        return (
+//            <ConnectedStore store={CartStore} propNames={['cartItems']}>
+//                {propValues => <Cart {...propValues} />}
+//            </ConnectedStore>
+//        );
+//    }
+//}
+
+//module.exports = MakeConnectedComponent(Cart,CartStore,"cartItems");
+
+class ConnectedCart extends Cart {}
+
+ConnectedCart = connect(CartStore, "cartItems")(ConnectedCart);
+ConnectedCart = connect(ProductStore, "products")(ConnectedCart);
+
+module.exports = ConnectedCart;

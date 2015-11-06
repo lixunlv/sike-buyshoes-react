@@ -9,6 +9,7 @@ window.onload = () => {
     React.render(<Products/>,document.querySelector(".site__content"));
     React.render(<Cart/>, document.querySelector(".cart"));
     React.render(<Checkout/>,document.querySelector(".checkout"));
+
 };
 
 

@@ -1,16 +1,17 @@
 import React from 'react';
-import Data from '../data.js';
+import ProductStore from "../stores/ProductStore.jsx";
 import CartStore from '../stores/CartStore.jsx';
+import connect from "./connect.jsx";
 
-export default class Checkout extends React.Component {
+class Checkout extends React.Component {
     componentDidMount() {
-        CartStore.addChangeListener(this.forceUpdate.bind(this));
+        //CartStore.addChangeListener(this.forceUpdate.bind(this));
     }
     render() {
-        let cartItems = CartStore.getCartItems();
+        let {cartItems, products} = this.props;
         let total = Object.keys(cartItems).reduce((previousValue, key, index, array) => {
             let item = cartItems[key];
-            let p = Data.products[item['id']];
+            let p = products[item['id']];
 
             return previousValue + p['price'] * item['quantity'];
         }, 0);
@@ -56,3 +57,10 @@ export default class Checkout extends React.Component {
         );
     }
 };
+
+class ConnectedCheckout extends Checkout {}
+
+ConnectedCheckout = connect(CartStore, "cartItems")(ConnectedCheckout);
+ConnectedCheckout = connect(ProductStore, "products")(ConnectedCheckout);
+
+module.exports = ConnectedCheckout;

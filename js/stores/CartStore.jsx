@@ -1,5 +1,4 @@
 import EventEmitter from "events";
-import Data from "../data.js";
 
 let CartStore = (() => {
     let emitter = new EventEmitter();
@@ -17,6 +16,10 @@ let CartStore = (() => {
     return {
         // Reader methods
         getCartItems() {
+            return _cartItems;
+        },
+
+        cartItems() {
             return _cartItems;
         },
 
