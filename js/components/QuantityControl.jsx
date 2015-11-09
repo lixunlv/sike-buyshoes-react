@@ -1,15 +1,15 @@
 import React from "react";
-import CartStore from "../stores/CartStore.jsx";
+import Action from "./Action.jsx";
 
 export default class QuantityControl extends React.Component {
     subOnClick(e) {
         let {id, quantity} = this.props.item;
-        CartStore.updateCartItemQuantity(id, quantity - 1);
+        Action.updateCartItemQuantity(id, quantity -1);
     }
 
     addOnClick(e) {
         let {id, quantity} = this.props.item;
-        CartStore.updateCartItemQuantity(id, quantity + 1);
+        Action.updateCartItemQuantity(id, quantity + 1);
     }
     render() {
         let {quantity} = this.props.item;

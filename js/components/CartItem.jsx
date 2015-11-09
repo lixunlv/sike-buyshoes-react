@@ -1,10 +1,10 @@
 import React from 'react';
 import QuantityControl from './QuantityControl.jsx';
-import CartStore from '../stores/CartStore.jsx';
+import Action from './Action.jsx';
 
 export default class CartItem extends React.Component {
     trashOnClick(e) {
-        CartStore.removeCartItem(this.props.item['id']);
+        Action.removeCartItem(this.props.item['id']);
     }
 
     render() {

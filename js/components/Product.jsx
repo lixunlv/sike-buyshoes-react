@@ -1,22 +1,16 @@
 import React from "react";
 import Data from "../data.js";
 import QuantityControl from "./QuantityControl.jsx";
-import CartStore from "../stores/CartStore.jsx";
-import LikeStore from "../stores/LikeStore.jsx";
+import Action from "./Action.jsx";
 
 export default class Product extends React.Component {
-    componentDidMount() {
-        //CartStore.addChangeListener(this.forceUpdate.bind(this));
-    }
 
     onClick(e) {
-        let {id} = this.props.product;
-        CartStore.addCartItem(id);
+        Action.addCartItem(this.props.product.id);
     }
 
     likeOnClick(e) {
-        let {id} = this.props.product;
-        LikeStore.toggleLikeItem(id);
+        Action.toggleLikeItem(this.props.product.id);
     }
 
     render() {
@@ -28,7 +22,6 @@ export default class Product extends React.Component {
                 <img className="product__add__icon" src="img/cart-icon.svg" />
             </a>;
 
-        //var cartItems = CartStore.getCartItems();
         if (cartItems && cartItems[id]) {
             let cartItem = {
                 id: id,

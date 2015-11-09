@@ -1,12 +1,23 @@
 import EventEmitter from "events";
 import LikeStore from "./LikeStore.jsx";
 import Data from "../data.js";
+import dispatcher from "../components/Dispacher.jsx";
 
 let ProductStore = (() => {
     let emitter = new EventEmitter();
 
     let _products = Data.products;
     let _showOnlyLike = false;
+
+    dispatcher.register((action) => {
+        if (action.type == "toggleShowOnlyLike")
+            toggleShowOnlyLike();
+    });
+
+    function toggleShowOnlyLike() {
+        _showOnlyLike = !_showOnlyLike;
+        emitChange();
+    }
 
     function emitChange() {
         emitter.emit("change");
@@ -23,7 +34,6 @@ let ProductStore = (() => {
 
             let result = {};
             Object.keys(LikeStore.likeItems()).forEach((id)=> {
-                console.log(id);
                 result[id] = _products[id];
             });
 
@@ -32,11 +42,6 @@ let ProductStore = (() => {
 
         showOnlyLike() {
             return _showOnlyLike;
-        },
-
-        toggleShowOnlyLike() {
-            _showOnlyLike = !_showOnlyLike;
-            emitChange();
         },
 
         addChangeListener(callback) {

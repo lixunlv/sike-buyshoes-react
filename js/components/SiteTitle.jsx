@@ -1,10 +1,11 @@
 import React from "react";
 import ProductStore from "../stores/ProductStore.jsx";
 import connect from "./connect.jsx";
+import Action from "./Action.jsx";
 
 class SiteTitle extends React.Component {
     heartOnClick(e) {
-        ProductStore.toggleShowOnlyLike();
+        Action.toggleShowOnlyLike();
     }
     render() {
         let heart = this.props.showOnlyLike ? "img/heart-liked.svg" : "img/heart.svg";

@@ -4,9 +4,6 @@ import CartStore from '../stores/CartStore.jsx';
 import connect from "./connect.jsx";
 
 class Checkout extends React.Component {
-    componentDidMount() {
-        //CartStore.addChangeListener(this.forceUpdate.bind(this));
-    }
     render() {
         let {cartItems, products} = this.props;
         let total = Object.keys(cartItems).reduce((previousValue, key, index, array) => {

@@ -3,7 +3,9 @@ import Ps from 'perfect-scrollbar';
 import CartItem from "./CartItem.jsx";
 import CartStore from "../stores/CartStore.jsx";
 import ProductStore from "../stores/ProductStore.jsx";
+import UndoStore from "../stores/UndoStore.jsx";
 import connect from "./connect.jsx";
+import Action from "./Action.jsx";
 //import ConnectedStore from "./ConnectedStore.jsx";
 //import MakeConnectedComponent from "./MakeConnectedComponent.jsx";
 //import Data from '../data.js';
@@ -13,12 +15,20 @@ class Cart extends React.Component {
     componentDidMount() {
         let $content = React.findDOMNode(this.refs.content);
         Ps.initialize($content);
-
         //CartStore.addChangeListener(this.forceUpdate.bind(this));
     }
+
+    undo() {
+        Action.undoShoppingCart();
+    }
+
     render() {
         //let cartItems = CartStore.getCartItems();
-        let {cartItems} = this.props;
+        console.log(this.props);
+        let {cartItems, hasUndo} = this.props;
+        let u = hasUndo ? <h3 className="cart__undo"><a onClick={this.undo}>undo</a></h3> : "";
+        console.log(u);
+
         let children = Object.keys(cartItems).map(key => {
             let item = cartItems[key];
             let p = this.props.products[item['id']];
@@ -32,6 +42,7 @@ class Cart extends React.Component {
             return (
                 <CartItem item={cartItem} key={item['id']}/>
             )
+
         });
 
         return (
@@ -41,6 +52,7 @@ class Cart extends React.Component {
                     <h3 className="cart__title cart__title--spacer">Shopping Cart</h3>
                     {children}
                 </div>
+                {u}
             </div>
         );
     }
@@ -62,5 +74,6 @@ class ConnectedCart extends Cart {}
 
 ConnectedCart = connect(CartStore, "cartItems")(ConnectedCart);
 ConnectedCart = connect(ProductStore, "products")(ConnectedCart);
+ConnectedCart = connect(UndoStore, "hasUndo")(ConnectedCart);
 
 module.exports = ConnectedCart;
